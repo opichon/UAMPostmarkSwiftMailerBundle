@@ -3,3 +3,4 @@ services:
         class: UAM\Bundle\PostmarkBundle\SwiftMailer\PostmarkTransport
         arguments:
             - @postmark.message
+            - @swiftmailer.transport.eventdispatcher

@@ -8,6 +8,7 @@ namespace UAM\Bundle\PostmarkBundle\SwiftMailer;
 
 use MZ\PostmarkBundle\Postmark\Message;
 
+use \Swift_Events_EventDispatcher;
 use \Swift_Events_EventListener;
 use \Swift_Mime_HeaderSet;
 use \Swift_Mime_Message;
@@ -45,28 +46,52 @@ class PostmarkTransport implements Swift_Transport {
 
     protected $postmark_message;
 
+    protected $started  = false;
+
+    protected $dispatcher;
+
     /**
      * @param string $postmark_api_token Postmark API key
      * @param string|array $from Postmark sender signature email
      * @param string $postmark_uri Postmark HTTP service URI
      */
-    public function __construct(Message $postmark_message) {
+    public function __construct(Message $postmark_message, Swift_Events_EventDispatcher $dispatcher) {
         $this->postmark_message = $postmark_message;
+        $tis->dispatcher = $dispatcher;
     }
        
     public function isStarted()
     {
-        return false;
+        return $this->started;
     }
     
     public function start()
     {
+        if (!$this->started) {
+            if ($event = $this->dispatcher->createTransportChangeEvent($this)) {
+                $this->dispatcher->dispatchEvent($event, 'beforeTransportStarted');
+                if ($event->bubbleCancelled()) {
+                    return;
+                }
+            }
+
+            $this->started = true;
+        }
 
     }
 
     public function stop()
     {
+        if ($this->started) {
+            if ($event = $this->dispatcher->createTransportChangeEvent($this)) {
+                $this->dispatcher->dispatchEvent($event, 'beforeTransportStopped');
+                if ($event->bubbleCancelled()) {
+                    return;
+                }
+            }
+        }
 
+        $this->started = false;
     }
 
     /**
@@ -93,7 +118,7 @@ class PostmarkTransport implements Swift_Transport {
     }
   
     public function registerPlugin(Swift_Events_EventListener $plugin) {
-        // TODO
+        $this->dispatcher->bindEventListener($plugin);
     } 
 
     protected function getPostmarkMessage(Swift_Mime_Message $message)
@@ -108,7 +133,7 @@ class PostmarkTransport implements Swift_Transport {
         $headers->remove('Subject');
 
         $postmark
-            ->setSubject($headers->get('From')->getFieldBody());
+            ->setFrom($headers->get('From')->getFieldBody());
 
         $headers->remove('From');
 
