@@ -51,7 +51,7 @@ class PostmarkTransport implements Swift_Transport {
      * @param string $postmark_uri Postmark HTTP service URI
      */
     public function __construct(Message $postmark_message) {
-        $this->message = $postmark_message;
+        $this->postmark_message = $postmark_message;
     }
        
     public function isStarted()
