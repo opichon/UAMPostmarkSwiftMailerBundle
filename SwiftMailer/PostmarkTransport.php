@@ -123,12 +123,16 @@ class PostmarkTransport implements Swift_Transport {
             $postmark->addTo($email, $name);
         }
 
-        foreach ($headers->get('Cc')->getNameAddresses() as $email => $name) {
-            $postmark->addCC($email, $name);
+        if ($headers->has('Cc')) {
+            foreach ($headers->get('Cc')->getNameAddresses() as $email => $name) {
+                $postmark->addCC($email, $name);
+            }
         }
 
-        foreach ($headers->get('Bcc')->getNameAddresses() as $email => $name) {
-            $postmark->addBCC($email, $name);
+        if  ($headers->has('Bcc')) {
+            foreach ($headers->get('Bcc')->getNameAddresses() as $email => $name) {
+                $postmark->addBCC($email, $name);
+            }
         }
 
         foreach ($headers as $header) {
