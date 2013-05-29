@@ -1,5 +1,5 @@
 {
-    "name": "uam/postmark-bundle",
+    "name": "uam/postmark-swiftmailer-bundle",
     "description": "Symfony bundle to provide a Postmark SwiftMailer service",
     "keywords": ["postmarkapp", "swiftmailer", "symfony", "bundle"],
     "homepage": "http://gitweb.united-asian.com",
