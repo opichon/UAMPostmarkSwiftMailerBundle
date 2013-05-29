@@ -57,7 +57,7 @@ class PostmarkTransport implements Swift_Transport {
      */
     public function __construct(Message $postmark_message, Swift_Events_EventDispatcher $dispatcher) {
         $this->postmark_message = $postmark_message;
-        $tis->dispatcher = $dispatcher;
+        $this->dispatcher = $dispatcher;
     }
        
     public function isStarted()
