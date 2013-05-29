@@ -118,7 +118,7 @@ class PostmarkTransport implements Swift_Transport {
         try {
             $response = @json_decode($postmark->send(), true);
             if ($response['ErrorCode'] == 0) {
-                $send_count = count($response['To']);
+                $send_count = count(explode("," ,$response['To']));
             }
         }
         catch (Exception $e) {
