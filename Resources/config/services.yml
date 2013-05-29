@@ -1,0 +1,5 @@
+services:
+    uam_postmark.swift_transport.postmark:
+        class: UAM\Bundle\PostmarkBundle\SwiftMailer\PostmarkTransport
+        arguments:
+            - @postmark.message

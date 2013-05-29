@@ -1,0 +1,28 @@
+{
+    "name": "uam/postmark-bundle",
+    "description": "Symfony bundle to provide a Postmark SwiftMailer service",
+    "keywords": ["postmarkapp", "swiftmailer", "symfony", "bundle"],
+    "homepage": "http://gitweb.united-asian.com",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Olivier Pichon",
+            "email": "op@united-asian.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/framework-bundle": ">=2.1.0,<2.3-dev",
+        "mlpz/postmark-bundle": "dev-master"
+    },
+    "autoload": {
+        "psr-0": { "UAM\\Bundle\\PostmarkBundle": "" }
+    },
+    "target-dir": "UAM/Bundle/PostmarkBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.x-dev"
+        }
+    }
+}
