@@ -10,6 +10,7 @@ use MZ\PostmarkBundle\Postmark\Message;
 
 use \Swift_Events_EventDispatcher;
 use \Swift_Events_EventListener;
+use \Swift_Events_SendEvent;
 use \Swift_Mime_HeaderSet;
 use \Swift_Mime_Message;
 use \Swift_Transport;
