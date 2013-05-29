@@ -104,6 +104,13 @@ class PostmarkTransport implements Swift_Transport {
         $failed_recipients = (array)$failed_recipients;
         $postmark = $this->getPostmarkMessage($message);
 
+        if ($event = $this->dispatcher->createSendEvent($this, $message)) {
+            $this->dispatcher->dispatchEvent($event, 'beforeSendPerformed');
+            if ($event->bubbleCancelled()) {
+                return 0;
+            }
+        }
+
         $send_count = 0;
 
         try {
@@ -112,7 +119,19 @@ class PostmarkTransport implements Swift_Transport {
                 $send_count = count($response['To']);
             }
         }
-        catch (Exception $e) {}
+        catch (Exception $e) {
+        }
+
+        if ($event) {
+            if ($send_count > 0) {
+                $event->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
+            }
+            else {
+                $event->setResult(Swift_Events_SendEvent::RESULT_FAILED);
+            }
+
+            $this->dispatcher->dispatchEvent($event, 'sendPerformed');
+        }
 
         return $send_count;
     }
