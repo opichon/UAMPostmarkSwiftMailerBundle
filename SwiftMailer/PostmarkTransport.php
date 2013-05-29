@@ -98,7 +98,7 @@ class PostmarkTransport implements Swift_Transport {
 
     protected function getPostmarkMessage(Swift_Mime_Message $message)
     {
-        $postmark = $this->getPostmarkMessagService();
+        $postmark = $this->getPostmarkMessageService();
 
         $headers = $this->processHeaders($message->getHeaders());
 
