@@ -103,7 +103,6 @@ class PostmarkTransport implements Swift_Transport {
     public function send(Swift_Mime_Message $message, &$failed_recipients = NULL)
     {        
         $failed_recipients = (array)$failed_recipients;
-        $postmark = $this->getPostmarkMessage($message);
 
         if ($event = $this->dispatcher->createSendEvent($this, $message)) {
             $this->dispatcher->dispatchEvent($event, 'beforeSendPerformed');
@@ -111,6 +110,8 @@ class PostmarkTransport implements Swift_Transport {
                 return 0;
             }
         }
+
+        $postmark = $this->getPostmarkMessage($message);
 
         $send_count = 0;
 
