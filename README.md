@@ -5,7 +5,7 @@ A Symfony2 bundle that provides a SwiftMailer Transport implementation based on 
 
 While a Symfony app by no means requires to use SwiftMailer for sending emails, there are many benefits to using it: log of emails sent, ability to redirect to a single delivery address during development, etc.
 
-This bundle allows you to use the Postmark API as a SwiftMailer transport in your Symfony app. This provides you with the benefits of using the SwiftMailer component in hour app and of the Postmark API.
+This bundle allows you to use the Postmark API as a SwiftMailer transport in your Symfony app. This provides you with the benefits of using the SwiftMailer component in your app and of using the Postmark API.
 
 This bundle is in its early stages of development, and can hardly be viewed as production-ready. Usage in production is at your peril.
 
