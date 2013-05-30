@@ -1,6 +1,6 @@
 services:
     uam_postmark.swift_transport.postmark:
-        class: UAM\Bundle\PostmarkBundle\SwiftMailer\PostmarkTransport
+        class: UAM\Bundle\PostmarkSwiftMailerBundle\SwiftMailer\PostmarkTransport
         arguments:
             - @postmark.message
             - @swiftmailer.transport.eventdispatcher
