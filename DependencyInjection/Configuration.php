@@ -1,6 +1,6 @@
 <?php
 
-namespace UAM\Bundle\PostmarkBundle\DependencyInjection;
+namespace UAM\Bundle\PostmarkSwiftMailerBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
