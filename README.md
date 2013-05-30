@@ -28,7 +28,7 @@ public function registerBundles()
 	bundles = (
 		// …
 		new MZ\PostmarkBUndle\MZPostmarkBundle(),
-		new UAM\Bundle\PostmarkBundle\UAMPostmarkBundle(),
+		new UAM\Bundle\PostmarkSwiftMailerBundle\UAMPostmarkSwiftMailerBundle(),
 	);
 	
 	return bundles();

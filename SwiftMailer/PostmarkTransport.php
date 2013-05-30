@@ -4,7 +4,7 @@
  * @author Øystein Riiser Gundersen <oysteinrg@gmail.com>
  */
 
-namespace UAM\Bundle\PostmarkBundle\SwiftMailer;
+namespace UAM\Bundle\PostmarkSwiftMailerBundle\SwiftMailer;
 
 use MZ\PostmarkBundle\Postmark\Message;
 
@@ -43,7 +43,7 @@ class PostmarkTransport implements Swift_Transport {
     protected $IGNORED_HEADERS = array('Content-Type', 'Date');
     
     /** @var array */
-    protected $UNSUPPORTED_HEADERS = array(); //'Bcc', 'Cc');
+    protected $UNSUPPORTED_HEADERS = array();
 
     protected $postmark_message;
 
