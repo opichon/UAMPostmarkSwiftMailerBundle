@@ -41,7 +41,7 @@ Configuration
 Configure the MZPostmarkBundle as per that bundle's documentation:
 
 ```
-# app/config.php
+# app/config/config.php
 
 mz_postmark:
     api_key:    %postmark_api_key%
@@ -51,13 +51,20 @@ mz_postmark:
     timeout:    %postmark_timeout%
 ```
 
-Update your SwiftMailer configuration:
+Update your SwiftMailer configuration to use the `uam_postmark` SwiftMailer transport provided by this bundle.
 
 ```
 # app/config.php
 swiftmailer:
 	transport: uam_postmark
 ```
+
+Usage
+-----
+
+This bundle creates a service aliased `uam_postmark` which implements a SwiftMailer transport based on the [Postmark](https://postmarkapp.com/) API.
+
+Create your SwiftMailer messages as usual. When sent, the messages will be routed through the `uam_postmark` transport to the [Postmark](https://postmarkapp.com/) servers.
 
 SwitfMailer plugins
 -------------------
@@ -85,6 +92,21 @@ Make sure that the HTML body in your emails are set as a MIME part:
 $message
     ->addPart($htmlBody, 'text/html');
 ```
+
+### Email count
+
+The `Swift_Transport#send()` method returns the count of messages sent. 
+
+This bundle's implementation will return the number of emails sent to recipients included in the 'To' header. Emails sent to 'Cc' and 'Bcc' recipients will not be included in the email count returned.
+
+The reason for this is that the postmark API, while supporting Cc and Bcc recipients, does not seem to include any data about them in its response to a request to send a message. 
+
+ 
+### Failed recipients
+
+The `Swift_Transport#send()` method's second parameter is designed to be passed a variable which collects the email addresses of failed recipients.
+
+This is not supported by this bundle's implementation of the Swift_Transport interface. By design, this implementation will make a single call to the Postmark API for all the recipients (To, Cc, and Bcc included included in a single call, as opposed to a call per recipient). This single call will fail if one of the email addresses is invalid. 
 
 ### Redirecting custom headers are lost
 
