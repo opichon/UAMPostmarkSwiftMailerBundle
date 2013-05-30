@@ -1,11 +1,13 @@
 uam-postmark-swiftmailer-bundle
 ===================
 
-A Symfony2 bundle that provides a SwiftMailer Transport implementation based on PostmarkAp's API.
+A Symfony2 bundle that provides a SwiftMailer Transport implementation based on Postmark's API.
 
 While a Symfony app by no means requires to use SwiftMailer for sending emails, there are many benefits to using it: log of emails sent, ability to redirect to a single delivery address during development, etc.
 
 This bundle allows you to use the Postmark API as a SwiftMailer transport in your Symfony app. This provides you with the benefits of using the SwiftMailer component in hour app and of the Postmark API.
+
+This bundle is in its early stages of development, and can hardly be viewed as production-ready. Usage in production is at your peril.
 
 Installation
 ------------
@@ -60,7 +62,7 @@ swiftmailer:
 SwitfMailer plugins
 -------------------
 
-The UAMPostmarkTransport should in theory be able to support all swiftmailer plugins. However, so far, only the Redirecting plugin has been tested.
+The UAMPostmarkTransport should in theory be able to support all swiftmailer plugins. However, so far only the Redirecting plugin has been tested to some extent.
 
 ### Redirecting
 
@@ -75,7 +77,7 @@ swiftmailer:
 Known issues
 ------------
 
-### HTML body:
+### HTML message content shows up as raw text
 
 Make sure that the HTML body in your emails are set as a MIME part:
 
@@ -83,3 +85,7 @@ Make sure that the HTML body in your emails are set as a MIME part:
 $message
     ->addPart($htmlBody, 'text/html');
 ```
+
+### Redirecting custom headers are lost
+
+SwiftMailer's Redirecting plugin adds custom headers to your message to reflect the origin recipients ('X-Swift-To', 'X-Swift-Cc', 'X-Swift-Bcc'). These headers are not recognized by the Postmark API and are not retained in the actual message sent via Postmark.
