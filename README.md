@@ -34,7 +34,7 @@ public function registerBundles()
 {
 	bundles = (
 		// …
-		new MZ\PostmarkBUndle\MZPostmarkBundle(),
+		new MZ\PostmarkBundle\MZPostmarkBundle(),
 		new UAM\Bundle\PostmarkSwiftMailerBundle\UAMPostmarkSwiftMailerBundle(),
 	);
 	
@@ -120,4 +120,4 @@ This is not supported by this bundle's implementation of the Swift_Transport int
 
 ### Redirecting custom headers are lost
 
-SwiftMailer's Redirecting plugin adds custom headers to your message to reflect the origin recipients ('X-Swift-To', 'X-Swift-Cc', 'X-Swift-Bcc'). These headers are not recognized by the Postmark API and are not retained in the actual message sent via Postmark.
+SwiftMailer's Redirecting plugin adds custom headers to your message to reflect the original recipients ('X-Swift-To', 'X-Swift-Cc', 'X-Swift-Bcc'). These headers are not recognized by the Postmark API and are not retained in the actual message sent via Postmark.
