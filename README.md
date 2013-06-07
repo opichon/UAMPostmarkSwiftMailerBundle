@@ -1,13 +1,20 @@
-uam-postmark-swiftmailer-bundle
+UAMPostmarkSwiftmailerBundle
 ===================
 
 A Symfony2 bundle that provides a SwiftMailer Transport implementation based on Postmark's API.
 
-While a Symfony app by no means requires to use SwiftMailer for sending emails, there are many benefits to using it: log of emails sent, ability to redirect to a single delivery address during development, etc.
+While a Symfony app by no means requires you to use SwiftMailer for sending emails, there are many benefits to doing so: log of emails sent, ability to redirect to a single delivery address during development, etc.
 
-This bundle allows you to use the Postmark API as a SwiftMailer transport in your Symfony app. This provides you with the benefits of using the SwiftMailer component in your app and of using the Postmark API.
+This bundle allows you to use the Postmark API as a SwiftMailer transport in your Symfony app. This provides you with the benefits of both SwiftMailer and of the Postmark service.
 
 This bundle is in its early stages of development, and can hardly be viewed as production-ready. Usage in production is at your peril.
+
+Requirements
+------------
+
+You need an active account at [https://postmarkapp.com/](https://postmarkapp.com) adn a Postmark API key.
+
+This bundle relies on the [MZPostmarkBundle](https://packagist.org/packages/mlpz/postmark-bundle) and will include it automatically.
 
 Installation
 ------------
@@ -38,6 +45,7 @@ public function registerBundles()
 
 Configuration
 -------------
+
 Configure the MZPostmarkBundle as per that bundle's documentation:
 
 ```
@@ -59,12 +67,14 @@ swiftmailer:
 	transport: uam_postmark
 ```
 
+There is no configuration specific to this bundle.
+
 Usage
 -----
 
 This bundle creates a service aliased `uam_postmark` which implements a SwiftMailer transport based on the [Postmark](https://postmarkapp.com/) API.
 
-Create your SwiftMailer messages as usual. When sent, the messages will be routed through the `uam_postmark` transport to the [Postmark](https://postmarkapp.com/) servers.
+Create your SwiftMailer messages as usual. When sent, the messages will be routed through the `uam_postmark` transport to the Postmark servers.
 
 SwitfMailer plugins
 -------------------
@@ -99,7 +109,7 @@ The `Swift_Transport#send()` method returns the count of messages sent.
 
 This bundle's implementation will return the number of emails sent to recipients included in the 'To' header. Emails sent to 'Cc' and 'Bcc' recipients will not be included in the email count returned.
 
-The reason for this is that the postmark API, while supporting Cc and Bcc recipients, does not seem to include any data about them in its response to a request to send a message. 
+The reason for this is that the Postmark API, while supporting Cc and Bcc recipients, does not seem to include any data about them in its response to a request to send a message. 
 
  
 ### Failed recipients
