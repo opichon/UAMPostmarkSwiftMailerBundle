@@ -12,7 +12,7 @@ This bundle is in its early stages of development, and can hardly be viewed as p
 Requirements
 ------------
 
-You need an active account at [https://postmarkapp.com/](https://postmarkapp.com) adn a Postmark API key.
+You need an active account at [https://postmarkapp.com/](https://postmarkapp.com) and a Postmark API key.
 
 This bundle relies on the [MZPostmarkBundle](https://packagist.org/packages/mlpz/postmark-bundle) and will include it automatically.
 
