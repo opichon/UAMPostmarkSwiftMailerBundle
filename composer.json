@@ -17,9 +17,8 @@
         "mlpz/postmark-bundle": "*"
     },
     "autoload": {
-        "psr-0": { "UAM\\Bundle\\PostmarkSwiftMailerBundle": "" }
+        "psr-4": { "UAM\\Bundle\\PostmarkSwiftMailerBundle\\": "src" }
     },
-    "target-dir": "UAM/Bundle/PostmarkSwiftMailerBundle",
     "extra": {
         "branch-alias": {
             "dev-master": "0.2.x-dev"
