@@ -16,15 +16,15 @@ use \Swift_Mime_Message;
 use \Swift_Transport;
 
 /**
- * A SwiftMailer transport implementation for the 
+ * A SwiftMailer transport implementation for the
  * {@link http://postmarkapp.com/ Postmark} email delivery API for transactional
  * email.
- *  
- * Postmark is *not* for bulk email, but multiple recipients are still supported 
- * by posting the email once for each address. 
- *  
+ *
+ * Postmark is *not* for bulk email, but multiple recipients are still supported
+ * by posting the email once for each address.
+ *
  * Bcc and Cc headers are silently ignored as these are not supported by Postmark.
- *  
+ *
  * Usage:
  * <code>
  *    $transport = Swift_PostmarkTransport::newInstance('YOUR-POSTMARK-API-KEY')
@@ -35,13 +35,13 @@ use \Swift_Transport;
  *      ->setBody('Here is the message itself');
  *    $mailer->send($message);
  * </code>
- *  
+ *
  */
 class PostmarkTransport implements Swift_Transport {
-    
+
     /** @var array */
     protected $IGNORED_HEADERS = array('Content-Type', 'Date');
-    
+
     /** @var array */
     protected $UNSUPPORTED_HEADERS = array();
 
@@ -60,17 +60,18 @@ class PostmarkTransport implements Swift_Transport {
         $this->postmark_message = $postmark_message;
         $this->dispatcher = $dispatcher;
     }
-       
+
     public function isStarted()
     {
         return $this->started;
     }
-    
+
     public function start()
     {
         if (!$this->started) {
             if ($event = $this->dispatcher->createTransportChangeEvent($this)) {
                 $this->dispatcher->dispatchEvent($event, 'beforeTransportStarted');
+
                 if ($event->bubbleCancelled()) {
                     return;
                 }
@@ -86,6 +87,7 @@ class PostmarkTransport implements Swift_Transport {
         if ($this->started) {
             if ($event = $this->dispatcher->createTransportChangeEvent($this)) {
                 $this->dispatcher->dispatchEvent($event, 'beforeTransportStopped');
+
                 if ($event->bubbleCancelled()) {
                     return;
                 }
@@ -101,11 +103,12 @@ class PostmarkTransport implements Swift_Transport {
      * @return int
      */
     public function send(Swift_Mime_Message $message, &$failed_recipients = NULL)
-    {        
+    {
         $failed_recipients = (array)$failed_recipients;
 
         if ($event = $this->dispatcher->createSendEvent($this, $message)) {
             $this->dispatcher->dispatchEvent($event, 'beforeSendPerformed');
+
             if ($event->bubbleCancelled()) {
                 return 0;
             }
@@ -115,16 +118,17 @@ class PostmarkTransport implements Swift_Transport {
 
         $send_count = 0;
 
-        try {
-            $response = @json_decode($postmark->send(), true);
-            if ($response['ErrorCode'] == 0) {
-                $send_count = count(explode("," ,$response['To']));
-            }
-        }
-        catch (Exception $e) {
+        $response = json_decode($postmark->send(), true);
+
+//        var_dump($response);
+//        die();
+
+        if ($response['ErrorCode'] == 0) {
+            $send_count = count(explode("," ,$response['To']));
         }
 
         if ($event) {
+
             if ($send_count > 0) {
                 $event->setResult(Swift_Events_SendEvent::RESULT_SUCCESS);
             }
@@ -137,10 +141,10 @@ class PostmarkTransport implements Swift_Transport {
 
         return $send_count;
     }
-  
+
     public function registerPlugin(Swift_Events_EventListener $plugin) {
         $this->dispatcher->bindEventListener($plugin);
-    } 
+    }
 
     protected function getPostmarkMessage(Swift_Mime_Message $message)
     {
@@ -150,7 +154,7 @@ class PostmarkTransport implements Swift_Transport {
 
         $postmark
             ->setSubject($headers->get('Subject')->getFieldBody());
- 
+
         $headers->remove('Subject');
 
         $postmark
@@ -188,7 +192,7 @@ class PostmarkTransport implements Swift_Transport {
             );
         }
 
-        return $postmark;        
+        return $postmark;
     }
 
     /**
@@ -204,7 +208,7 @@ class PostmarkTransport implements Swift_Transport {
         }
         return $html_part;
     }
-    
+
     /**
      * @param Swift_Mime_HeaderSet $message
      */

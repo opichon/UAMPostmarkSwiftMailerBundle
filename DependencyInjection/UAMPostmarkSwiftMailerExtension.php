@@ -26,5 +26,7 @@ class UAMPostmarkSwiftMailerExtension extends Extension
         $loader->load('services.yml');
 
         $container->setAlias('uam_postmark', 'uam_postmark.swift_transport.postmark');
+
+        $container->setAlias('swiftmailer.mailer.transport.uam_postmark', 'uam_postmark');
     }
 }
